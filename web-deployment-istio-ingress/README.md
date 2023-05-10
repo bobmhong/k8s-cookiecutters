@@ -1,10 +1,10 @@
 # web-deployment-istio-ingress
 
-This template generates Kubernetes manifests for a simple web deployment in an [Istio](https://istio.io/latest/docs/) enabled cluster using [Cookiecutter](https://cookiecutter.readthedocs.io/en/1.7.3/README.html).
+This template generates Kubernetes manifests for a simple web deployment in an [Istio](https://istio.io/latest/docs/) enabled cluster using [Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/README.html).
 
 By using this tool, you'll be prompted to enter values for your application, but can accept sensible default values.
 
-For more control, you can create a [User Config](https://cookiecutter.readthedocs.io/en/1.7.3/advanced/user_config.html) file to pre-populate settings suitable for your environment.
+For more control, you can create a [User Config](https://cookiecutter.readthedocs.io/en/stable/advanced/user_config.html) file to pre-populate settings suitable for your environment.
 
 ## Base Resources Created
 
@@ -23,7 +23,7 @@ Once you run cookiecutter in create code from this template, you can run `kustom
 
 ## Setup
 
-- Follow the [Install Guide](https://cookiecutter.readthedocs.io/en/1.7.3/installation.html) based on your OS.
+- Follow the [Install Guide](https://cookiecutter.readthedocs.io/en/stable/installation.html) based on your OS.
 
 ## Generating Code
 
