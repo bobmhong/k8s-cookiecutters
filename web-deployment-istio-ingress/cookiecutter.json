@@ -1,0 +1,21 @@
+{
+    "release_name": "myapp",
+    "__app_name": "{{cookiecutter.release_name|lower|replace(' ', '-')|replace('_', '-')}}",
+    "system": "{{cookiecutter.__app_name}}-system",
+    "__system": "{{cookiecutter.system|lower|replace(' ', '-')|replace('_', '-')}}",
+    "container_registry": "default",
+    "__container_registry": "{{'' if cookiecutter.container_registry == 'default' else cookiecutter.container_registry if cookiecutter.container_registry.endswith('/') else cookiecutter.container_registry + '/'}}",
+    "docker_image": "{{cookiecutter.__container_registry}}nginx:1.23.4-alpine",
+    "container_port": 80,
+    "expose_port": 80,
+    "health_path": "/",
+    "external_domain": "example.com",
+    "internal_domain": "{{cookiecutter.external_domain.split('.')[0]}}",
+    "min_replicas": 1,
+    "max_replicas": 2,
+    "max_cpu_percentage": 80,
+    "max_cpu": "1024m",
+    "max_memory": "512Mi",
+    "min_cpu": "100m",
+    "min_memory": "128Mi"
+}

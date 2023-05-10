@@ -1,0 +1,41 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{cookiecutter.__app_name}}-deployment
+  labels:
+    app.kubernetes.io/name: {{cookiecutter.__app_name}}
+    app.kubernetes.io/part-of: {{cookiecutter.__system}}
+spec:
+  replicas: {{cookiecutter.min_replicas}}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{cookiecutter.__app_name}}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{cookiecutter.__app_name}}
+    spec:
+      containers:
+        - name: {{cookiecutter.__app_name}}
+          image: "{{cookiecutter.docker_image}}"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: {{cookiecutter.container_port}}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{cookiecutter.health_path}}
+              port: {{cookiecutter.container_port}}
+          readinessProbe:
+            httpGet:
+              path: {{cookiecutter.health_path}}
+              port: {{cookiecutter.container_port}}
+          resources:
+            limits:
+              cpu: {{cookiecutter.max_cpu}}
+              memory: {{cookiecutter.max_memory}}
+            requests:
+              cpu: {{cookiecutter.min_cpu}}
+              memory: {{cookiecutter.min_memory}}

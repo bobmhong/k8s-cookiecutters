@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{cookiecutter.__app_name}}-vs
+spec:
+  gateways:
+  - {{cookiecutter.__app_name}}-ingress
+  hosts:
+  - '*'
+  http:
+  - route:
+    - destination:
+        host: {{cookiecutter.__app_name}}-service.{{cookiecutter.__app_name}}.svc.cluster.local
+        port:
+          number: {{cookiecutter.expose_port}}

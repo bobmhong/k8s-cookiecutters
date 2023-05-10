@@ -1,0 +1,18 @@
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{cookiecutter.__app_name}}-service
+  labels:
+    app.kubernetes.io/name: {{cookiecutter.__app_name}}
+spec:
+  type: ClusterIP
+  clusterIP: None  # Headless Service
+  ports:
+  - name: http
+    port: {{cookiecutter.expose_port}}
+    targetPort: {{cookiecutter.container_port}}
+  selector:
+    app.kubernetes.io/name: {{cookiecutter.__app_name}}
+  
+  

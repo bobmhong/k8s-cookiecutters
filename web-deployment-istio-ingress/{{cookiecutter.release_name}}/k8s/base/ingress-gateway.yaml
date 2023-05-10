@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{cookiecutter.__app_name}}-ingress
+spec:
+  selector:
+    app.kubernetes.io/instance: ingress
+    app.kubernetes.io/name: istio-gateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - {{cookiecutter.__app_name}}.{{cookiecutter.external_domain}}
+    tls:
+      mode: SIMPLE
+      credentialName: {{cookiecutter.__app_name}}-tls

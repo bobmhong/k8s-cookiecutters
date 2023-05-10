@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{cookiecutter.__app_name}}-cert
+spec:
+  secretName: {{cookiecutter.__app_name}}-tls
+  commonName: {{cookiecutter.__app_name}}.{{cookiecutter.external_domain}}
+  dnsNames:
+    - {{cookiecutter.__app_name}}.{{cookiecutter.internal_domain}}
+
+  issuerRef:
+    name: pcp-certmanager
+    kind: ClusterIssuer
+  secretTemplate:
+    annotations:
+      replicator.v1.mittwald.de/replicate-to: "istio-gateway"

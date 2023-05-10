@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: {{cookiecutter.__app_name}}-dev
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Certificate
+      name: {{cookiecutter.__app_name}}-cert
+    patch: |
+      - op: replace
+        path: /spec/secretName
+        value: dev-{{cookiecutter.__app_name}}-tls
+      
+      - op: replace
+        path: /spec/commonName
+        value: dev-{{cookiecutter.__app_name}}.{{cookiecutter.external_domain}}
+
+      - op: replace
+        path: /spec/dnsNames
+        value:
+          - dev-{{cookiecutter.__app_name}}.{{cookiecutter.internal_domain}}
+          - dev-{{cookiecutter.__app_name}}.${cluster_site}.{{cookiecutter.internal_domain}}
+          - dev-{{cookiecutter.__app_name}}.${cluster_instance}.${cluster_site}.{{cookiecutter.internal_domain}}
+          
+  - target:
+      kind: Gateway
+      name: {{cookiecutter.__app_name}}-ingress
+    patch: |
+      - op: replace
+        path: /spec/servers/0/hosts
+        value:
+          - dev-{{cookiecutter.__app_name}}.{{cookiecutter.external_domain}}
+          - dev-{{cookiecutter.__app_name}}.{{cookiecutter.internal_domain}}
+          - dev-{{cookiecutter.__app_name}}.${cluster_site}.{{cookiecutter.internal_domain}}
+          - dev-{{cookiecutter.__app_name}}.${cluster_instance}.${cluster_site}.{{cookiecutter.internal_domain}}
+      
+      - op: replace
+        path: /spec/servers/0/tls/credentialName
+        value: dev-{{cookiecutter.__app_name}}-tls
+
+  - target:
+      kind: VirtualService
+      name: {{cookiecutter.__app_name}}-vs
+    patch: |
+      - op: replace
+        path: /spec/http/0/route/0/destination/host
+        value: {{cookiecutter.__app_name}}-service.{{cookiecutter.__app_name}}-dev.svc.cluster.local

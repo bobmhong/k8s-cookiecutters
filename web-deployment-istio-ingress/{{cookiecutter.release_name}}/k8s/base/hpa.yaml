@@ -1,0 +1,13 @@
+# hpa.yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{cookiecutter.__app_name}}-hpa
+spec:
+  maxReplicas: {{cookiecutter.max_replicas}}
+  minReplicas: {{cookiecutter.min_replicas}}
+  targetCPUUtilizationPercentage: {{cookiecutter.max_cpu_percentage}}
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: {{cookiecutter.__app_name}}-deployment
